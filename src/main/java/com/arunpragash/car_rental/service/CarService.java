@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.arunpragash.car_rental.model.Car;
-import com.arunpragash.car_rental.model.CarImages;
-import com.arunpragash.car_rental.model.CarModel;
-import com.arunpragash.car_rental.model.CarPrice;
-import com.arunpragash.car_rental.model.CarSpecs;
 import com.arunpragash.car_rental.model.requestModel.CarRequest;
+import com.arunpragash.car_rental.model.table.Car;
+import com.arunpragash.car_rental.model.table.CarImages;
+import com.arunpragash.car_rental.model.table.CarModel;
+import com.arunpragash.car_rental.model.table.CarPrice;
+import com.arunpragash.car_rental.model.table.CarSpecs;
 import com.arunpragash.car_rental.repository.CarImagesRepository;
 import com.arunpragash.car_rental.repository.CarModelRepository;
 import com.arunpragash.car_rental.repository.CarPriceRepository;

@@ -1,4 +1,4 @@
-package com.arunpragash.car_rental.model;
+package com.arunpragash.car_rental.model.table;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

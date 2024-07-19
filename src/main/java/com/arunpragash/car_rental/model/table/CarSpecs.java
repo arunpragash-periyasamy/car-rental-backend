@@ -1,4 +1,4 @@
-package com.arunpragash.car_rental.model;
+package com.arunpragash.car_rental.model.table;
 
 import java.sql.Timestamp;
 
@@ -8,21 +8,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 @Entity
 @Data
-public class CarImages {
+public class CarSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
 
-    private String path;
+    private String gearType;
+    private String mileage;
+    private String fuelType;
+    private String drivetrain;
+    private String enginePower;
+    private String transmission;
+    private String brake;
 @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
+    // Getters and Setters
 }

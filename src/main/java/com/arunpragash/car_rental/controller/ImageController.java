@@ -8,7 +8,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.arunpragash.car_rental.model.Image;
+import com.arunpragash.car_rental.model.table.Image;
 import com.arunpragash.car_rental.service.ImageService;
 
 import jakarta.servlet.http.HttpServletRequest;

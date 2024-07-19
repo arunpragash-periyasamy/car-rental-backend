@@ -1,6 +1,6 @@
 package com.arunpragash.car_rental.controller;
 
-import com.arunpragash.car_rental.model.User;
+import com.arunpragash.car_rental.model.table.User;
 import com.arunpragash.car_rental.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

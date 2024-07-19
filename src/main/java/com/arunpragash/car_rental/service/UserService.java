@@ -1,6 +1,6 @@
 package com.arunpragash.car_rental.service;
 
-import com.arunpragash.car_rental.model.User;
+import com.arunpragash.car_rental.model.table.User;
 import com.arunpragash.car_rental.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

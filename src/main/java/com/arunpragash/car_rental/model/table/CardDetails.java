@@ -1,7 +1,7 @@
-package com.arunpragash.car_rental.model;
+package com.arunpragash.car_rental.model.table;
 
 
-
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -15,27 +15,19 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Car {
+public class CardDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "model_id")
-    private CarModel model;
-
-    private String name;
-    private String vin;
-    private Integer year;
-
-    @ManyToOne
-    @JoinColumn(name = "place_id")
-    private Place place;
-
-    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private String cardNumber;
+    private String nameOnCard;
+    private Integer cvv;
+    private Date expiry;
+@Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
 }

@@ -1,4 +1,4 @@
-package com.arunpragash.car_rental.model;
+package com.arunpragash.car_rental.model.table;
 
 import java.sql.Timestamp;
 
@@ -15,24 +15,28 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Transaction {
+public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "card_id")
-    private CardDetails card;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private String transactionNumber;
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+    private String path;
     @Enumerated(EnumType.STRING)
-    private TransactionStatus status;
-    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp createdAt;
+    private DocumentType type;
 
     // Getters and Setters
-    public enum TransactionStatus {
-        SUCCESS, FAIL
+    public enum DocumentType {
+        CAR, LICENSE
     }
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createdAt;
 }
-

@@ -1,4 +1,4 @@
-package com.arunpragash.car_rental.model;
+package com.arunpragash.car_rental.model.table;
 
 
 
@@ -15,18 +15,24 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Address {
+public class CarPrice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "car_id")
+    private Car car;
 
-    private String address;
-    private String pincode;
+    private Integer amount;
+    private String priceType;
+    private Integer doorDeliveryAndPickup;
+    private Integer tripProtectionFees;
+    private Integer convenienceFees;
+    private Integer tax;
+    private Integer refundableDeposit;
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
-    
+
+    // Getters and Setters
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.arunpragash.car_rental.model.Image;
+import com.arunpragash.car_rental.model.table.Image;
 import com.arunpragash.car_rental.repository.ImageRepository;
 
 import java.io.File;

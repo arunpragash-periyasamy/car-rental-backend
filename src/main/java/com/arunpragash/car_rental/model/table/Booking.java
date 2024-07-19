@@ -1,5 +1,7 @@
-package com.arunpragash.car_rental.model;
+package com.arunpragash.car_rental.model.table;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -9,31 +11,27 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Data
-@Table
-public class Order {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String orderId;
+    @ManyToOne
+    @JoinColumn(name = "tenant_id")
+    private User tenant;
 
     @ManyToOne
-    @JoinColumn(name = "transaction_id")
-    private Transaction transaction;
+    @JoinColumn(name = "lessor_id")
+    private User lessor;
 
-    @ManyToOne
-    @JoinColumn(name = "billing_id")
-    private Billing billing;
-
-    @ManyToOne
-    @JoinColumn(name = "booking_id")
-    private Booking booking;
+    private Date startDate;
+    private Time startTime;
+    private Date endDate;
+    private Time endTime;
 @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
-
 }

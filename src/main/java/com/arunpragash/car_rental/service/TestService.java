@@ -2,9 +2,9 @@ package com.arunpragash.car_rental.service;
 
 import org.springframework.stereotype.Service;
 
-import com.arunpragash.car_rental.model.Cars;
 import com.arunpragash.car_rental.model.Test;
-import com.arunpragash.car_rental.model.User;
+import com.arunpragash.car_rental.model.table.Cars;
+import com.arunpragash.car_rental.model.table.User;
 
 @Service
 public class TestService {

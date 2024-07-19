@@ -30,8 +30,6 @@ public class CarRequest {
     private Integer tax;
     private Integer convenienceFee;
     private Integer refundableDeposit;
-    private List<MultipartFile> images; // Adjusted to MultipartFile
-
-    // Other constructors and getters/setters
+    private List<MultipartFile> images;
 }
 
