@@ -1,6 +1,7 @@
 package com.arunpragash.car_rental.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.arunpragash.car_rental.model.table.User;
@@ -14,6 +15,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByPhoneNumber(Long phoneNumber);
 
-   User findByUserName(String userName);
+    User findByUserName(String userName);
+
+    User findByUserNameOrEmailAndPassword(String username, String email, String password);
     // Add more custom query methods as needed
+
+    User findByUserNameOrEmail(String userName, String email);
+
+    User getIdByUserName(String userName);
 }

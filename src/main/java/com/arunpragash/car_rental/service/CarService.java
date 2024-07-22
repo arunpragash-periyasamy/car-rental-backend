@@ -6,11 +6,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.arunpragash.car_rental.model.requestModel.CarRequest;
+import com.arunpragash.car_rental.model.requestModel.CarResponse;
 import com.arunpragash.car_rental.model.table.Car;
 import com.arunpragash.car_rental.model.table.CarImages;
 import com.arunpragash.car_rental.model.table.CarModel;
 import com.arunpragash.car_rental.model.table.CarPrice;
 import com.arunpragash.car_rental.model.table.CarSpecs;
+import com.arunpragash.car_rental.model.table.User;
 import com.arunpragash.car_rental.repository.CarImagesRepository;
 import com.arunpragash.car_rental.repository.CarModelRepository;
 import com.arunpragash.car_rental.repository.CarPriceRepository;
@@ -22,10 +24,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService {
+
+    @Autowired
+    UserService userService;
 
     // Directory where uploads will be stored
     private static final String UPLOAD_DIR = "/uploads/";
@@ -45,8 +52,9 @@ public class CarService {
     @Autowired
     private CarImagesRepository carImagesRepository;
 
-    public void saveCar(CarRequest carRequest, List<MultipartFile> images) throws IOException {
+    public void saveCar(CarRequest carRequest, List<MultipartFile> images, String userName) throws IOException {
         // Save CarModel
+        User user = userService.getUser(userName);
         CarModel carModel = new CarModel();
         carModel.setBrandName(carRequest.getBrandName());
         carModel.setModelName(carRequest.getModelName());
@@ -60,6 +68,7 @@ public class CarService {
         car.setVin(carRequest.getVin());
         car.setYear(carRequest.getYear());
         car.setModel(carModel);
+        car.setUser(user);
         car = carRepository.save(car);
 
         // Save CarSpecs
@@ -108,6 +117,109 @@ public class CarService {
             carImages.setCar(car);
             carImages.setPath(UPLOAD_DIR + generatedFileName); // Store relative path
             carImagesRepository.save(carImages);
+        }
+    }
+
+    public CarResponse getCar(Long id) {
+        Optional<Car> carOptional = carRepository.findById(id);
+        if (carOptional.isPresent()) {
+            Car car = carOptional.get();
+            CarModel carModel = car.getModel();
+            CarSpecs carSpecs = carSpecsRepository.findByCarId(car.getId());
+            CarPrice carPrice = carPriceRepository.findByCarId(car.getId());
+            List<Long> images = carImagesRepository.findByCarId(car.getId())
+                    .stream().map(CarImages::getId).collect(Collectors.toList());
+            return new CarResponse(
+                    car.getId(),
+                    car.getName(),
+                    carModel.getBrandName(),
+                    carModel.getModelName(),
+                    carModel.getBody(),
+                    car.getVin(),
+                    car.getYear(),
+                    carModel.getSeats(),
+                    carSpecs.getGearType(),
+                    carSpecs.getMileage(),
+                    carSpecs.getFuelType(),
+                    carSpecs.getDrivetrain(),
+                    carSpecs.getEnginePower(),
+                    carSpecs.getBrake(),
+                    carPrice.getAmount(),
+                    carPrice.getDoorDeliveryAndPickup(),
+                    carPrice.getTripProtectionFees(),
+                    carPrice.getTax(),
+                    carPrice.getConvenienceFees(),
+                    carPrice.getRefundableDeposit(),
+                    images);
+        }
+        return null;
+    }
+  
+    public List<CarResponse> getAllCars() {
+        return carRepository.findAll().stream().map(car -> {
+            CarModel carModel = car.getModel();
+            CarSpecs carSpecs = carSpecsRepository.findByCarId(car.getId());
+            CarPrice carPrice = carPriceRepository.findByCarId(car.getId());
+            List<Long> images = carImagesRepository.findByCarId(car.getId())
+                    .stream().map(CarImages::getId).collect(Collectors.toList());
+
+            return new CarResponse(
+                    car.getId(),
+                    car.getName(),
+                    carModel.getBrandName(),
+                    carModel.getModelName(),
+                    carModel.getBody(),
+                    car.getVin(),
+                    car.getYear(),
+                    carModel.getSeats(),
+                    carSpecs.getGearType(),
+                    carSpecs.getMileage(),
+                    carSpecs.getFuelType(),
+                    carSpecs.getDrivetrain(),
+                    carSpecs.getEnginePower(),
+                    carSpecs.getBrake(),
+                    carPrice.getAmount(),
+                    carPrice.getDoorDeliveryAndPickup(),
+                    carPrice.getTripProtectionFees(),
+                    carPrice.getTax(),
+                    carPrice.getConvenienceFees(),
+                    carPrice.getRefundableDeposit(),
+                    images);
+        }).collect(Collectors.toList());
+    }
+    
+
+    public Optional<Car> getCarById(Long id) {
+        return carRepository.findById(id);
+    }
+
+
+    public ImageData getImageById(Long id) throws IOException {
+        CarImages carImages = carImagesRepository.findById(id);
+
+        String imagePath = carImages.getPath();
+        Path path = Paths.get(System.getProperty("user.dir") + imagePath);
+        byte[] imageData = Files.readAllBytes(path);
+        String mimeType = Files.probeContentType(path);
+
+        return new ImageData(imageData, mimeType);
+    }
+
+    public static class ImageData {
+        private final byte[] data;
+        private final String mimeType;
+
+        public ImageData(byte[] data, String mimeType) {
+            this.data = data;
+            this.mimeType = mimeType;
+        }
+
+        public byte[] getData() {
+            return data;
+        }
+
+        public String getMimeType() {
+            return mimeType;
         }
     }
 }

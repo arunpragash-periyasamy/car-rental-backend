@@ -58,6 +58,15 @@ public class UserService {
         }
     }
 
-    // Add more methods as needed, e.g., find user by username, update user, delete
-    // user, etc.
+    public User getUser(String userName) {
+        User user = userRepository.findByUserName(userName);
+        return user;
+    }
+
+    public Integer getUserId(String userName) {
+        Integer id = userRepository.getIdByUserName(userName).getId();
+        System.out.println(id);
+        return id;
+    }
 }
+// User(id=1,name=Arunpragash,userName=arun_racer,email=arunpragash46 @gmail.com,phoneNumber=6382868122,password=$2a$10$CnMKsNaVLfL3XLClmC0nb.iaiKX6ekUYJ6AMFEiinR96ZW0KMP2xe,userType=admin,createdAt=2024-07-18 18:29:03.0)
