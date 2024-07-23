@@ -30,7 +30,7 @@ public class CarPrice {
     private String priceType;
     private Integer doorDeliveryAndPickup;
     private Integer tripProtectionFees;
-    private Integer convenienceFees;
+    private Integer convenienceFee;
     private Integer tax;
     private Integer refundableDeposit;
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

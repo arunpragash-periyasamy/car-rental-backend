@@ -7,12 +7,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.arunpragash.car_rental.model.requestModel.CarRequest;
 import com.arunpragash.car_rental.model.requestModel.CarResponse;
+import com.arunpragash.car_rental.model.table.Address;
 import com.arunpragash.car_rental.model.table.Car;
 import com.arunpragash.car_rental.model.table.CarImages;
 import com.arunpragash.car_rental.model.table.CarModel;
 import com.arunpragash.car_rental.model.table.CarPrice;
 import com.arunpragash.car_rental.model.table.CarSpecs;
 import com.arunpragash.car_rental.model.table.User;
+import com.arunpragash.car_rental.repository.AddressRepository;
 import com.arunpragash.car_rental.repository.CarImagesRepository;
 import com.arunpragash.car_rental.repository.CarModelRepository;
 import com.arunpragash.car_rental.repository.CarPriceRepository;
@@ -52,6 +54,9 @@ public class CarService {
     @Autowired
     private CarImagesRepository carImagesRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     public void saveCar(CarRequest carRequest, List<MultipartFile> images, String userName) throws IOException {
         // Save CarModel
         User user = userService.getUser(userName);
@@ -71,6 +76,15 @@ public class CarService {
         car.setUser(user);
         car = carRepository.save(car);
 
+        // save address
+        Address address = new Address();
+        address.setUser(user);
+        address.setCar(car);
+        address.setCity(carRequest.getCity());
+        address.setCountry(carRequest.getCountry());
+        address.setAddress(carRequest.getAddress());
+        address.setPinCode(carRequest.getPinCode());
+        address = addressRepository.save(address);
         // Save CarSpecs
         CarSpecs carSpecs = new CarSpecs();
         carSpecs.setCar(car);
@@ -89,7 +103,7 @@ public class CarService {
         carPrice.setDoorDeliveryAndPickup(carRequest.getDoorDeliveryPrice());
         carPrice.setTripProtectionFees(carRequest.getTripProtectionFee());
         carPrice.setTax(carRequest.getTax());
-        carPrice.setConvenienceFees(carRequest.getConvenienceFee());
+        carPrice.setConvenienceFee(carRequest.getConvenienceFee());
         carPrice.setRefundableDeposit(carRequest.getRefundableDeposit());
         carPriceRepository.save(carPrice);
 
@@ -97,6 +111,7 @@ public class CarService {
         saveImages(car, images);
     }
 
+    @SuppressWarnings("null")
     private void saveImages(Car car, List<MultipartFile> images) throws IOException {
         for (MultipartFile file : images) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -115,7 +130,7 @@ public class CarService {
             // Save image path in the database
             CarImages carImages = new CarImages();
             carImages.setCar(car);
-            carImages.setPath(UPLOAD_DIR + generatedFileName); // Store relative path
+            carImages.setPath(UPLOAD_DIR + generatedFileName); 
             carImagesRepository.save(carImages);
         }
     }
@@ -127,8 +142,9 @@ public class CarService {
             CarModel carModel = car.getModel();
             CarSpecs carSpecs = carSpecsRepository.findByCarId(car.getId());
             CarPrice carPrice = carPriceRepository.findByCarId(car.getId());
-            List<Long> images = carImagesRepository.findByCarId(car.getId())
-                    .stream().map(CarImages::getId).collect(Collectors.toList());
+            Address address = addressRepository.findByCarId(car.getId());
+            List<String> images = carImagesRepository.findByCarId(car.getId())
+                    .stream().map(carImage -> "http://localhost:8080/api/cars/images/" + carImage.getId()).collect(Collectors.toList());
             return new CarResponse(
                     car.getId(),
                     car.getName(),
@@ -148,20 +164,28 @@ public class CarService {
                     carPrice.getDoorDeliveryAndPickup(),
                     carPrice.getTripProtectionFees(),
                     carPrice.getTax(),
-                    carPrice.getConvenienceFees(),
+                    carPrice.getConvenienceFee(),
                     carPrice.getRefundableDeposit(),
+                    address.getAddress(),
+                    address.getCity(),
+                    address.getState(),
+                    address.getPinCode(),
+                    address.getCountry(),
                     images);
         }
         return null;
     }
   
-    public List<CarResponse> getAllCars() {
-        return carRepository.findAll().stream().map(car -> {
+    public List<CarResponse> getAllCarsByUser(String userName) {
+        User user = userService.getUser(userName);
+        return carRepository.findAllByUser(user).stream().map(car -> {
             CarModel carModel = car.getModel();
             CarSpecs carSpecs = carSpecsRepository.findByCarId(car.getId());
             CarPrice carPrice = carPriceRepository.findByCarId(car.getId());
-            List<Long> images = carImagesRepository.findByCarId(car.getId())
-                    .stream().map(CarImages::getId).collect(Collectors.toList());
+            Address address = addressRepository.findByCarId(car.getId());
+            List<String> images = carImagesRepository.findByCarId(car.getId())
+                    .stream().map(carImage -> "http://localhost:8080/api/cars/images/" + carImage.getId())
+                    .collect(Collectors.toList());
 
             return new CarResponse(
                     car.getId(),
@@ -182,12 +206,56 @@ public class CarService {
                     carPrice.getDoorDeliveryAndPickup(),
                     carPrice.getTripProtectionFees(),
                     carPrice.getTax(),
-                    carPrice.getConvenienceFees(),
+                    carPrice.getConvenienceFee(),
                     carPrice.getRefundableDeposit(),
+                    address.getAddress(),
+                    address.getCity(),
+                    address.getState(),
+                    address.getPinCode(),
+                    address.getCountry(),
                     images);
         }).collect(Collectors.toList());
     }
     
+    public List<CarResponse> getAllCars() {
+        return carRepository.findAll().stream().map(car -> {
+            CarModel carModel = car.getModel();
+            CarSpecs carSpecs = carSpecsRepository.findByCarId(car.getId());
+            CarPrice carPrice = carPriceRepository.findByCarId(car.getId());
+            Address address = addressRepository.findByCarId(car.getId());
+            List<String> images = carImagesRepository.findByCarId(car.getId())
+                    .stream().map(carImage -> "http://localhost:8080/api/cars/images/" + carImage.getId())
+                    .collect(Collectors.toList());
+
+            return new CarResponse(
+                    car.getId(),
+                    car.getName(),
+                    carModel.getBrandName(),
+                    carModel.getModelName(),
+                    carModel.getBody(),
+                    car.getVin(),
+                    car.getYear(),
+                    carModel.getSeats(),
+                    carSpecs.getGearType(),
+                    carSpecs.getMileage(),
+                    carSpecs.getFuelType(),
+                    carSpecs.getDrivetrain(),
+                    carSpecs.getEnginePower(),
+                    carSpecs.getBrake(),
+                    carPrice.getAmount(),
+                    carPrice.getDoorDeliveryAndPickup(),
+                    carPrice.getTripProtectionFees(),
+                    carPrice.getTax(),
+                    carPrice.getConvenienceFee(),
+                    carPrice.getRefundableDeposit(),
+                    address.getAddress(),
+                    address.getCity(),
+                    address.getState(),
+                    address.getPinCode(),
+                    address.getCountry(),
+                    images);
+        }).collect(Collectors.toList());
+    }
 
     public Optional<Car> getCarById(Long id) {
         return carRepository.findById(id);

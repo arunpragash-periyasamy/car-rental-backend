@@ -63,8 +63,8 @@ public class UserService {
         return user;
     }
 
-    public Integer getUserId(String userName) {
-        Integer id = userRepository.getIdByUserName(userName).getId();
+    public Long getUserId(String userName) {
+        Long id = userRepository.getIdByUserName(userName).getId();
         System.out.println(id);
         return id;
     }

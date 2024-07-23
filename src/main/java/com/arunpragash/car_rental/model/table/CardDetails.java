@@ -1,9 +1,9 @@
 package com.arunpragash.car_rental.model.table;
 
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +29,7 @@ public class CardDetails {
     private String cardNumber;
     private String nameOnCard;
     private Integer cvv;
-    private Date expiry;
+    private LocalDate expiry;
 @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 private Timestamp createdAt;
       @PrePersist

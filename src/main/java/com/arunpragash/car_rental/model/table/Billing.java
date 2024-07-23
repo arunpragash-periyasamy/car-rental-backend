@@ -29,7 +29,6 @@ public class Billing {
     private Integer noOfPersons;
     private String companyName;
     private String drivingLicenceNumber;
-    private String documentPath;
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
       @PrePersist

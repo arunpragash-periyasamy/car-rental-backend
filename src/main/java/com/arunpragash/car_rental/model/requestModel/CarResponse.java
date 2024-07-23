@@ -31,5 +31,10 @@ public class CarResponse {
     private Integer tax;
     private Integer convenienceFee;
     private Integer refundableDeposit;
-    private List<Long> images;
+    private String Address;
+    private String state;
+    private String city;
+    private Integer pinCode;
+    private String country;
+    private List<String> images;
 }

@@ -1,7 +1,6 @@
 package com.arunpragash.car_rental.service;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -28,7 +27,8 @@ public class JwtFilter extends OncePerRequestFilter{
     JwtService jwtService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    @SuppressWarnings("null")
+    protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
       
         String authHeader = request.getHeader("Authorization");

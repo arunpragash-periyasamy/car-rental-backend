@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 import com.arunpragash.car_rental.model.table.User;
+import com.arunpragash.car_rental.service.EmailService;
 import com.arunpragash.car_rental.service.JwtService;
 import com.arunpragash.car_rental.service.UserService;
 
@@ -26,6 +27,9 @@ public class AuthController {
     private AuthenticationManager authManager;
 
     @Autowired
+    private EmailService eamilService;
+
+    @Autowired
     private JwtService jwtService;
 
     @Autowired
@@ -34,6 +38,7 @@ public class AuthController {
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         try {
             userService.registerUser(user);
+            eamilService.sendEmail(user.getEmail(), "Car Rental Registration", "Hi <h2>"+user.getName()+"</h2> <br>Thank you for registering with us :) Happy Journey :) !!!");
             return ResponseEntity.ok("User registered successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -50,12 +55,16 @@ public class AuthController {
                 String token = jwtService.generateToken(userData);
                 Map<String, String> map = new HashMap<>();
                 map.put("token", token);
-                map.put("username", user.getUserName());
+                map.put("userName", user.getUserName());
+                map.put("userType", userData.getUserType());
                 return ResponseEntity.ok(map);
             }
                 
         } catch (Exception e) {
+            System.out.println("\n\n\n\n\n\n");
             System.out.println(e.getMessage());
+
+            System.out.println("\n\n\n\n\n\n");
         }
         Map<String, String> map = new HashMap<>();
         map.put("error", "Invalid username or password");

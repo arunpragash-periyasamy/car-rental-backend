@@ -3,11 +3,9 @@ package com.arunpragash.car_rental.controller;
 import com.arunpragash.car_rental.model.table.User;
 import com.arunpragash.car_rental.service.UserService;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

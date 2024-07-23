@@ -20,14 +20,19 @@ import lombok.Data;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
     private String address;
-    private String pincode;
+    private Integer pinCode;
+    private String state;
+    private String city;
+    private String country;
     @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
       @PrePersist

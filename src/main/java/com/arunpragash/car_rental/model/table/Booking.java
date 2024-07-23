@@ -1,9 +1,9 @@
 package com.arunpragash.car_rental.model.table;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +17,7 @@ import lombok.Data;
 
 @Entity
 @Data
+
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +31,18 @@ public class Booking {
     @JoinColumn(name = "lessor_id")
     private User lessor;
 
-    private Date startDate;
-    private Time startTime;
-    private Date endDate;
-    private Time endTime;
+    
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+    
+    private LocalDate startDate;
+    private LocalTime startTime;
+    private LocalDate endDate;
+    private LocalTime endTime;
+    private String deliveryLocation;
+    private String returnLocation;
 @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 private Timestamp createdAt;
       @PrePersist

@@ -30,6 +30,11 @@ public class CarRequest {
     private Integer tax;
     private Integer convenienceFee;
     private Integer refundableDeposit;
+    private String Address;
+    private String state;
+    private String city;
+    private Integer pinCode;
+    private String country;
     private List<MultipartFile> images;
 }
 

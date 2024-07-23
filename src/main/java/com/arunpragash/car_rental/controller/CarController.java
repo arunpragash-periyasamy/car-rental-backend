@@ -1,6 +1,5 @@
 package com.arunpragash.car_rental.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
@@ -13,13 +12,11 @@ import java.io.IOException;
 
 import com.arunpragash.car_rental.model.requestModel.CarRequest;
 import com.arunpragash.car_rental.model.requestModel.CarResponse;
-import com.arunpragash.car_rental.model.table.Car;
 import com.arunpragash.car_rental.service.CarService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -36,7 +33,23 @@ public class CarController {
         carService.saveCar(carRequest, images, userName);
         return ResponseEntity.ok("Car created successfully");
     }
+
+    @PutMapping("${id}")
+    public ResponseEntity<String> updateCar(@ModelAttribute CarRequest carRequest,
+            @RequestParam("images") List<MultipartFile> images, HttpServletRequest request, @PathVariable Long id) throws IOException {
+        String userName = (String) request.getAttribute("userName");
+        carService.saveCar(carRequest, images, userName);
+        return ResponseEntity.ok("Car created successfully");
+    }
     
+    @GetMapping("/myCars")
+    public ResponseEntity<List<CarResponse>> getAllCarByUser(HttpServletRequest request) {
+        String userName = (String) request.getAttribute("userName");
+        List<CarResponse> carResponses = carService.getAllCarsByUser(userName);
+
+        return ResponseEntity.ok(carResponses);
+    }
+
     @GetMapping
     public ResponseEntity<List<CarResponse>> getAllCars() {
         List<CarResponse> carResponses = carService.getAllCars();
