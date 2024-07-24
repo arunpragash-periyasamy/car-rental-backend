@@ -34,12 +34,12 @@ public class CarController {
         return ResponseEntity.ok("Car created successfully");
     }
 
-    @PutMapping("${id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateCar(@ModelAttribute CarRequest carRequest,
             @RequestParam("images") List<MultipartFile> images, HttpServletRequest request, @PathVariable Long id) throws IOException {
         String userName = (String) request.getAttribute("userName");
         carService.saveCar(carRequest, images, userName);
-        return ResponseEntity.ok("Car created successfully");
+        return ResponseEntity.ok("Car updated successfully");
     }
     
     @GetMapping("/myCars")

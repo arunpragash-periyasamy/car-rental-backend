@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarRequest {
+    private Long id;
     private String carName;
     private String brandName;
     private String modelName;
@@ -28,7 +29,7 @@ public class CarRequest {
     private Integer doorDeliveryPrice;
     private Integer tripProtectionFee;
     private Integer tax;
-    private Integer convenienceFee;
+    private Integer convienenceFee;
     private Integer refundableDeposit;
     private String Address;
     private String state;

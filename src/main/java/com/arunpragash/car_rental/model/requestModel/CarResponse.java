@@ -29,11 +29,11 @@ public class CarResponse {
     private Integer doorDeliveryPrice;
     private Integer tripProtectionFee;
     private Integer tax;
-    private Integer convenienceFee;
+    private Integer convienenceFee;
     private Integer refundableDeposit;
     private String Address;
-    private String state;
     private String city;
+    private String state;
     private Integer pinCode;
     private String country;
     private List<String> images;

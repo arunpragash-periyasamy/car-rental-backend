@@ -14,4 +14,6 @@ public interface CarImagesRepository extends JpaRepository<CarImages, Integer> {
     List<CarImages> findByCarId(Long carId);
 
     CarImages findById(Long Id);
+
+    void deleteAllByCarId(Long id);
 }
