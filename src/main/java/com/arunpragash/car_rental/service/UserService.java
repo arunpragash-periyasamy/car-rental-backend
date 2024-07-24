@@ -65,7 +65,6 @@ public class UserService {
 
     public Long getUserId(String userName) {
         Long id = userRepository.getIdByUserName(userName).getId();
-        System.out.println(id);
         return id;
     }
 }

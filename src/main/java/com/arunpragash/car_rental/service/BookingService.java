@@ -39,6 +39,9 @@ public class BookingService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    CarImagesRepository carImagesRepository;
+
     public String createBooking(BookingRequest bookingRequest, HttpServletRequest request) {
         // Extract username from request attributes
         String userName = (String) request.getAttribute("userName");
@@ -113,12 +116,14 @@ public class BookingService {
     }
     
     private BookingResponse convertToBookingResponse(Booking booking) {
+        String carImage = "http://localhost:8080/api/cars/images/" + carImagesRepository.findByCarId(booking.getCar().getId()).get(0).getId();
         return new BookingResponse(
                 booking.getId(),
                 booking.getTenant().getId(),
                 booking.getLessor().getId(),
                 booking.getCar().getId().toString(),
                 booking.getCar().getName(),
+                        carImage,
                 booking.getCar().getModel().getModelName(),
                 booking.getStartDate(),
                 booking.getStartTime(),

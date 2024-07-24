@@ -61,10 +61,7 @@ public class AuthController {
             }
                 
         } catch (Exception e) {
-            System.out.println("\n\n\n\n\n\n");
-            System.out.println(e.getMessage());
-
-            System.out.println("\n\n\n\n\n\n");
+           
         }
         Map<String, String> map = new HashMap<>();
         map.put("error", "Invalid username or password");

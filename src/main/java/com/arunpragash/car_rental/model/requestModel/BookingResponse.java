@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingResponse {
-    private int id;
+    private Integer id;
     private Long userId;
     private Long tenantId;
     private String carId;
     private String carName;
+    private String carImage;
     private String modelName;
     private LocalDate startDate;
     private LocalTime startTime;
