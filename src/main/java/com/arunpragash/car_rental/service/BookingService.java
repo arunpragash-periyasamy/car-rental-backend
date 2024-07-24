@@ -1,6 +1,7 @@
 package com.arunpragash.car_rental.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.arunpragash.car_rental.model.requestModel.BookingRequest;
@@ -41,6 +42,10 @@ public class BookingService {
 
     @Autowired
     CarImagesRepository carImagesRepository;
+
+
+    @Value("${app.url}")
+    private String appUrl;
 
     public String createBooking(BookingRequest bookingRequest, HttpServletRequest request) {
         // Extract username from request attributes
@@ -116,7 +121,9 @@ public class BookingService {
     }
     
     private BookingResponse convertToBookingResponse(Booking booking) {
-        String carImage = "http://localhost:8080/api/cars/images/" + carImagesRepository.findByCarId(booking.getCar().getId()).get(0).getId();
+
+
+        String carImage = appUrl + "/api/cars/images/" + carImagesRepository.findByCarId(booking.getCar().getId()).get(0).getId();
         return new BookingResponse(
                 booking.getId(),
                 booking.getTenant().getId(),

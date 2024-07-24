@@ -1,6 +1,7 @@
 package com.arunpragash.car_rental.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -60,6 +61,9 @@ public class CarService {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Value("${app.url}")
+    private String appURL;
+    
     @Transactional
     public void saveCar(CarRequest carRequest, List<MultipartFile> images, String userName) throws IOException {
         // Get the user
@@ -238,7 +242,7 @@ public class CarService {
             CarPrice carPrice = carPriceRepository.findByCarId(car.getId());
             Address address = addressRepository.findByCarId(car.getId());
             List<String> images = carImagesRepository.findByCarId(car.getId())
-                    .stream().map(carImage -> "http://localhost:8080/api/cars/images/" + carImage.getId())
+                    .stream().map(carImage -> appURL + "/api/cars/images/"+ carImage.getId())
                     .collect(Collectors.toList());
             return new CarResponse(
                     car.getId(),
@@ -279,7 +283,7 @@ public class CarService {
             CarPrice carPrice = carPriceRepository.findByCarId(car.getId());
             Address address = addressRepository.findByCarId(car.getId());
             List<String> images = carImagesRepository.findByCarId(car.getId())
-                    .stream().map(carImage -> "http://localhost:8080/api/cars/images/" + carImage.getId())
+                    .stream().map(carImage -> appURL + "/api/cars/images/"+ carImage.getId())
                     .collect(Collectors.toList());
 
             return new CarResponse(
@@ -319,7 +323,7 @@ public class CarService {
             CarPrice carPrice = carPriceRepository.findByCarId(car.getId());
             Address address = addressRepository.findByCarId(car.getId());
             List<String> images = carImagesRepository.findByCarId(car.getId())
-                    .stream().map(carImage -> "http://localhost:8080/api/cars/images/" + carImage.getId())
+                    .stream().map(carImage -> appURL + "/api/cars/images/"+ carImage.getId())
                     .collect(Collectors.toList());
 
             return new CarResponse(

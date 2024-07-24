@@ -13,14 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
+
 import com.arunpragash.car_rental.model.table.User;
 import com.arunpragash.car_rental.service.EmailService;
 import com.arunpragash.car_rental.service.JwtService;
 import com.arunpragash.car_rental.service.UserService;
 
+
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("*")
 public class AuthController {
     
     @Autowired

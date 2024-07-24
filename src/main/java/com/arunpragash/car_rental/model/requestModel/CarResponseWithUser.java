@@ -15,7 +15,6 @@ public class CarResponseWithUser extends CarResponse{
             String enginePower, String brake, Integer amount, Integer doorDeliveryAndPickup, Integer tripProtectionFees,
             Integer tax, Integer convenienceFee, Integer refundableDeposit, String address, String city, String state,
             Integer pinCode, String country, List<String> images, String userName2, String email2, Long phoneNumber2) {
-        //TODO Auto-generated constructor stub
     }
     private String userName;
     private String email;
