@@ -3,7 +3,8 @@ This is an Spring Boot application which serves the API endpoint for the Car Ren
 To run this application in the terminal and run the application continuously even the terminal closed,
 
 ```bash 
-nohup mvn spring-boot:run > spring-log.txt &```
+nohup mvn spring-boot:run > spring-log.txt &
+```
 
 To stop the application in ubuntu 
 
