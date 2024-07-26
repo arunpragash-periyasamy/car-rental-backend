@@ -20,7 +20,7 @@ kill -9 <PID>
 This github repository doesn't conatains the application.properties file you have to create by yourself.
 
 The application property need
-
+```bash
 spring.application.name=car-rental
 spring.datasource.url=<connection URL>
 spring.datasource.username=<DB user name>
@@ -38,5 +38,5 @@ spring.web.cors.allowed-methods=GET,POST,PUT,DELETE,OPTIONS
 spring.web.cors.allowed-headers=*
 app.jwtSecret=<your secret key>
 app.url=<your deployed url> 
-
+```
 
