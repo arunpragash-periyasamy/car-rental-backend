@@ -137,3 +137,18 @@ Hibernate: select c1_0.id,c1_0.created_at,m1_0.id,m1_0.body,m1_0.brand_name,m1_0
 Hibernate: select ci1_0.id,ci1_0.car_id,ci1_0.created_at,ci1_0.path from car_images ci1_0 where ci1_0.car_id=?
 Hibernate: select ci1_0.id,ci1_0.car_id,ci1_0.created_at,ci1_0.path from car_images ci1_0 where ci1_0.id=?
 Hibernate: select c1_0.id,c1_0.created_at,m1_0.id,m1_0.body,m1_0.brand_name,m1_0.created_at,m1_0.model_name,m1_0.seats,c1_0.name,p1_0.id,p1_0.city,p1_0.created_at,p1_0.pincode,p1_0.state,u1_0.id,u1_0.created_at,u1_0.email,u1_0.name,u1_0.password,u1_0.phone_number,u1_0.user_name,u1_0.user_type,c1_0.vin,c1_0.year from car c1_0 left join car_model m1_0 on m1_0.id=c1_0.model_id left join place p1_0 on p1_0.id=c1_0.place_id left join user u1_0 on u1_0.id=c1_0.user_id where c1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.name,u1_0.password,u1_0.phone_number,u1_0.user_name,u1_0.user_type from user u1_0 where u1_0.user_name=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.name,u1_0.password,u1_0.phone_number,u1_0.user_name,u1_0.user_type from user u1_0 where u1_0.user_name=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.name,u1_0.password,u1_0.phone_number,u1_0.user_name,u1_0.user_type from user u1_0 where u1_0.user_name=?
+Hibernate: select c1_0.id,c1_0.created_at,c1_0.model_id,c1_0.name,c1_0.place_id,c1_0.user_id,c1_0.vin,c1_0.year from car c1_0
+Hibernate: select cm1_0.id,cm1_0.body,cm1_0.brand_name,cm1_0.created_at,cm1_0.model_name,cm1_0.seats from car_model cm1_0 where cm1_0.id=?
+Hibernate: select u1_0.id,u1_0.created_at,u1_0.email,u1_0.name,u1_0.password,u1_0.phone_number,u1_0.user_name,u1_0.user_type from user u1_0 where u1_0.id=?
+Hibernate: select cs1_0.id,cs1_0.brake,cs1_0.car_id,cs1_0.created_at,cs1_0.drivetrain,cs1_0.engine_power,cs1_0.fuel_type,cs1_0.gear_type,cs1_0.mileage,cs1_0.transmission from car_specs cs1_0 where cs1_0.car_id=?
+Hibernate: select cp1_0.id,cp1_0.amount,cp1_0.car_id,cp1_0.convenience_fee,cp1_0.created_at,cp1_0.door_delivery_and_pickup,cp1_0.price_type,cp1_0.refundable_deposit,cp1_0.tax,cp1_0.trip_protection_fees from car_price cp1_0 where cp1_0.car_id=?
+Hibernate: select a1_0.id,a1_0.address,a1_0.car_id,a1_0.city,a1_0.country,a1_0.created_at,a1_0.pin_code,a1_0.state,a1_0.user_id from address a1_0 where a1_0.car_id=?
+Hibernate: select ci1_0.id,ci1_0.car_id,ci1_0.created_at,ci1_0.path from car_images ci1_0 where ci1_0.car_id=?
+Hibernate: select ci1_0.id,ci1_0.car_id,ci1_0.created_at,ci1_0.path from car_images ci1_0 where ci1_0.id=?
+Hibernate: select c1_0.id,c1_0.created_at,m1_0.id,m1_0.body,m1_0.brand_name,m1_0.created_at,m1_0.model_name,m1_0.seats,c1_0.name,p1_0.id,p1_0.city,p1_0.created_at,p1_0.pincode,p1_0.state,u1_0.id,u1_0.created_at,u1_0.email,u1_0.name,u1_0.password,u1_0.phone_number,u1_0.user_name,u1_0.user_type,c1_0.vin,c1_0.year from car c1_0 left join car_model m1_0 on m1_0.id=c1_0.model_id left join place p1_0 on p1_0.id=c1_0.place_id left join user u1_0 on u1_0.id=c1_0.user_id where c1_0.id=?
+2024-07-26T19:10:20.813+05:30  INFO 28670 --- [car-rental] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-26T19:10:20.821+05:30  INFO 28670 --- [car-rental] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-26T19:10:20.833+05:30  INFO 28670 --- [car-rental] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
